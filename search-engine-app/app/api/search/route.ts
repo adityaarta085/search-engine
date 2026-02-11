@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { performSearch, SearchType } from '@/lib/brave-search';
+import { performSearch, SearchType } from '@/lib/search';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

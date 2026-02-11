@@ -6,23 +6,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
 interface AISummaryPanelProps {
-  summarizerKey: string | null;
+  query: string | null;
 }
 
-export function AISummaryPanel({ summarizerKey }: AISummaryPanelProps) {
+export function AISummaryPanel({ query }: AISummaryPanelProps) {
   const [summary, setSummary] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchSummary = useCallback(async () => {
-    if (!summarizerKey) return;
+    if (!query) return;
     setLoading(true);
     setError(null);
     try {
       const response = await fetch("/api/summary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: summarizerKey }),
+        body: JSON.stringify({ query }),
       });
       const data = await response.json();
       if (data.error) throw new Error(data.error);
@@ -36,13 +36,13 @@ export function AISummaryPanel({ summarizerKey }: AISummaryPanelProps) {
     } finally {
       setLoading(false);
     }
-  }, [summarizerKey]);
+  }, [query]);
 
   useEffect(() => {
     fetchSummary();
   }, [fetchSummary]);
 
-  if (!summarizerKey) return null;
+  if (!query) return null;
 
   return (
     <div className="bg-card border border-border rounded-xl p-6 shadow-sm">

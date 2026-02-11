@@ -9,9 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.24",
     "@tailwindcss/typography": "^0.5.19",
-    "ai": "^6.0.79",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.563.0",
