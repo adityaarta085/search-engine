@@ -7,14 +7,13 @@ import { SearchResultItem } from "@/components/SearchResultItem";
 import { AISummaryPanel } from "@/components/AISummaryPanel";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SettingsMenu } from "@/components/SettingsMenu";
-import { Sparkles, Globe, Image as ImageIcon, Video, AlertCircle } from "lucide-react";
+import { Sparkles, Globe, Image as ImageIcon, Video, Newspaper, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { GoogleSearchResponse } from "@/lib/google-search";
 
 interface SearchClientProps {
   initialQuery: string;
-  initialResults: GoogleSearchResponse | null;
-  initialType: "web" | "image" | "video";
+  initialResults: any;
+  initialType: "web" | "image" | "video" | "news";
   error: string | null;
 }
 
@@ -39,7 +38,11 @@ export default function SearchClient({ initialQuery, initialResults, initialType
     { id: "web", label: "All", icon: Globe },
     { id: "image", label: "Images", icon: ImageIcon },
     { id: "video", label: "Videos", icon: Video },
+    { id: "news", label: "News", icon: Newspaper },
   ];
+
+  const results = initialType === 'web' ? initialResults?.web?.results : initialResults?.results;
+  const summarizerKey = initialResults?.summarizer?.key || null;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -88,24 +91,18 @@ export default function SearchClient({ initialQuery, initialResults, initialType
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Results Column */}
           <div className="lg:col-span-8 space-y-6">
-            {initialQuery && initialResults && (
-              <div className="text-xs text-muted-foreground mb-4">
-                About {initialResults.searchInformation.formattedTotalResults} results ({initialResults.searchInformation.formattedSearchTime} seconds)
-              </div>
-            )}
-
             {error ? (
               <div className="flex items-center space-x-2 p-4 bg-destructive/10 text-destructive rounded-xl">
                 <AlertCircle className="w-5 h-5" />
                 <p>{error}</p>
               </div>
-            ) : initialResults?.items ? (
+            ) : results && results.length > 0 ? (
               <div className={cn(
                 "space-y-0",
                 density === "compact" ? "gap-2" : density === "relaxed" ? "gap-8" : "gap-4"
               )}>
-                {initialResults.items.map((result, idx) => (
-                  <SearchResultItem key={result.link} result={result} index={idx} />
+                {results.map((result: any, idx: number) => (
+                  <SearchResultItem key={result.url || idx} result={result} index={idx} />
                 ))}
               </div>
             ) : initialQuery ? (
@@ -114,15 +111,15 @@ export default function SearchClient({ initialQuery, initialResults, initialType
               </div>
             ) : (
               <div className="py-20 text-center">
-                <p className="text-muted-foreground">Start searching the web with AI intelligence.</p>
+                <p className="text-muted-foreground">Start searching the web with Brave privacy-first index.</p>
               </div>
             )}
           </div>
 
           {/* AI Sidebar */}
           <aside className="lg:col-span-4 space-y-6">
-            {showAI && initialQuery && initialResults?.items && (
-              <AISummaryPanel query={initialQuery} results={initialResults.items} />
+            {showAI && initialQuery && summarizerKey && (
+              <AISummaryPanel summarizerKey={summarizerKey} />
             )}
 
             <div className="bg-card border border-border rounded-xl p-6 hidden lg:block">
@@ -130,15 +127,15 @@ export default function SearchClient({ initialQuery, initialResults, initialType
               <ul className="text-sm text-muted-foreground space-y-3">
                 <li className="flex items-start space-x-2">
                   <div className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0" />
-                  <span>Use double quotes for exact phrases</span>
+                  <span>Powered by Brave Search API</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <div className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0" />
-                  <span>Use &quot;site:&quot; to search specific websites</span>
+                  <span>Privacy-first, independent search results</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <div className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0" />
-                  <span>AI summaries are generated based on top results</span>
+                  <span>AI summaries provided by Brave Summarizer</span>
                 </li>
               </ul>
             </div>
@@ -149,7 +146,7 @@ export default function SearchClient({ initialQuery, initialResults, initialType
       {/* Footer */}
       <footer className="border-t border-border bg-muted/30 py-8 px-4">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>© 2024 AI Search Engine. Premium Design. No Tracking.</p>
+          <p>© 2024 AI Search Engine. Powered by Brave.</p>
           <div className="flex space-x-6">
             <Link href="#" className="hover:text-foreground">Privacy Policy</Link>
             <Link href="#" className="hover:text-foreground">Terms of Service</Link>

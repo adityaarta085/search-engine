@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { performSearch } from '@/lib/google-search';
+import { performSearch, SearchType } from '@/lib/brave-search';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get('q');
-  const type = (searchParams.get('type') as 'image' | 'video' | 'web') || 'web';
+  const type = (searchParams.get('type') as SearchType) || 'web';
 
   if (!q) {
     return NextResponse.json({ error: 'Query is required' }, { status: 400 });

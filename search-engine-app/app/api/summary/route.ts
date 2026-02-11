@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateAISummary } from '@/lib/ai-summary';
+import { getBraveSummary } from '@/lib/brave-summary';
 
 export async function POST(req: NextRequest) {
-  const { query, results } = await req.json();
+  const { key } = await req.json();
 
-  if (!query || !results) {
-    return NextResponse.json({ error: 'Query and results are required' }, { status: 400 });
+  if (!key) {
+    return NextResponse.json({ error: 'Summarizer key is required' }, { status: 400 });
   }
 
   try {
-    const summary = await generateAISummary(query, results);
+    const summary = await getBraveSummary(key);
     return NextResponse.json({ summary });
   } catch (error: unknown) {
-    console.error('AI Summary Error:', error);
+    console.error('Brave Summary Error:', error);
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });
   }

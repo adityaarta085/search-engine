@@ -4,15 +4,21 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { SearchResult } from "@/lib/google-search";
 
 interface SearchResultItemProps {
-  result: SearchResult;
+  result: {
+    title: string;
+    url: string;
+    description: string;
+    thumbnail?: { src: string };
+    profile?: { name: string; url: string; img: string };
+  };
   index: number;
 }
 
 export function SearchResultItem({ result, index }: SearchResultItemProps) {
-  const thumbnail = result.pagemap?.cse_thumbnail?.[0]?.src || result.pagemap?.cse_image?.[0]?.src;
+  const thumbnail = result.thumbnail?.src;
+  const displayLink = new URL(result.url).hostname;
 
   return (
     <motion.div
@@ -24,10 +30,13 @@ export function SearchResultItem({ result, index }: SearchResultItemProps) {
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 space-y-1">
           <div className="flex items-center space-x-2 text-xs text-muted-foreground truncate">
-            <span>{result.displayLink}</span>
+            {result.profile?.img && (
+              <img src={result.profile.img} alt="" className="w-4 h-4 rounded-full" />
+            )}
+            <span>{result.profile?.name || displayLink}</span>
           </div>
           <Link
-            href={result.link}
+            href={result.url}
             target="_blank"
             rel="noopener noreferrer"
             className="block group-hover:underline underline-offset-4 decoration-accent"
@@ -37,7 +46,7 @@ export function SearchResultItem({ result, index }: SearchResultItemProps) {
             </h3>
           </Link>
           <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-            {result.snippet}
+            {result.description}
           </p>
         </div>
         {thumbnail && (
