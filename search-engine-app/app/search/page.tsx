@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { performSearch } from "@/lib/google-search";
+import { performSearch, SearchType } from "@/lib/brave-search";
 import SearchClient from "./SearchClient";
 
 interface SearchPageProps {
@@ -9,7 +9,7 @@ interface SearchPageProps {
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = await searchParams;
   const query = params.q || "";
-  const type = (params.type as "web" | "image" | "video") || "web";
+  const type = (params.type as SearchType) || "web";
 
   let results = null;
   let error = null;
