@@ -3,9 +3,7 @@
 ## Prerequisites
 
 - Node.js 18+
-- Google Cloud Project with Custom Search API enabled
-- Google Search Engine ID (CX)
-- Google AI Studio API Key (for Gemini)
+- [Brave Search API Key](https://api.search.brave.com/app/dashboard)
 
 ## Installation
 
@@ -17,15 +15,11 @@
 
 ## Configuration
 
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the root directory (or add to Vercel Environment Variables):
 
 ```env
-# Google Search API
-GOOGLE_SEARCH_API_KEY=your_google_search_api_key
-GOOGLE_SEARCH_ENGINE_ID=your_search_engine_id
-
-# AI Integration (Gemini)
-GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_api_key
+# Brave Search API (Required for both search and AI summaries)
+BRAVE_SEARCH_API_KEY=your_brave_search_api_key
 ```
 
 ## Development
@@ -38,4 +32,4 @@ npm run dev
 
 ## Deployment
 
-This project is optimized for [Vercel](https://vercel.com). Simply connect your repository and add the environment variables mentioned above.
+This project is optimized for [Vercel](https://vercel.com). Simply connect your repository and add the `BRAVE_SEARCH_API_KEY` environment variable in the Vercel dashboard.

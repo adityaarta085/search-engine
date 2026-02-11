@@ -62,7 +62,7 @@ export default function Home() {
       </div>
 
       <footer className="fixed bottom-6 text-xs text-muted-foreground font-medium uppercase tracking-widest">
-        Powered by Google Search & AI
+        Made With <a href="https://adityaputra-portofolio.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Aditya Arta Putra X TJKT A SMKM BANDONGAN</a>
       </footer>
     </main>
   );
