@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { performSearch, SearchType } from "@/lib/brave-search";
+import { performSearch, SearchType } from "@/lib/search";
 import SearchClient from "./SearchClient";
 
 interface SearchPageProps {

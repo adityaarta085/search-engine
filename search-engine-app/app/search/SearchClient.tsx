@@ -9,10 +9,16 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { SettingsMenu } from "@/components/SettingsMenu";
 import { Sparkles, Globe, Image as ImageIcon, Video, Newspaper, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SearchResult } from "@/lib/search";
 
 interface SearchClientProps {
   initialQuery: string;
-  initialResults: any;
+  initialResults: {
+    results: SearchResult[];
+    web?: {
+      results: SearchResult[];
+    };
+  } | null;
   initialType: "web" | "image" | "video" | "news";
   error: string | null;
 }
@@ -42,7 +48,6 @@ export default function SearchClient({ initialQuery, initialResults, initialType
   ];
 
   const results = initialType === 'web' ? initialResults?.web?.results : initialResults?.results;
-  const summarizerKey = initialResults?.summarizer?.key || null;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -101,7 +106,7 @@ export default function SearchClient({ initialQuery, initialResults, initialType
                 "space-y-0",
                 density === "compact" ? "gap-2" : density === "relaxed" ? "gap-8" : "gap-4"
               )}>
-                {results.map((result: any, idx: number) => (
+                {results.map((result, idx) => (
                   <SearchResultItem key={result.url || idx} result={result} index={idx} />
                 ))}
               </div>
@@ -111,15 +116,15 @@ export default function SearchClient({ initialQuery, initialResults, initialType
               </div>
             ) : (
               <div className="py-20 text-center">
-                <p className="text-muted-foreground">Start searching the web with Brave privacy-first index.</p>
+                <p className="text-muted-foreground">Start searching the web with AI intelligence.</p>
               </div>
             )}
           </div>
 
           {/* AI Sidebar */}
           <aside className="lg:col-span-4 space-y-6">
-            {showAI && initialQuery && summarizerKey && (
-              <AISummaryPanel summarizerKey={summarizerKey} />
+            {showAI && initialQuery && (
+              <AISummaryPanel query={initialQuery} />
             )}
 
             <div className="bg-card border border-border rounded-xl p-6 hidden lg:block">
@@ -127,15 +132,15 @@ export default function SearchClient({ initialQuery, initialResults, initialType
               <ul className="text-sm text-muted-foreground space-y-3">
                 <li className="flex items-start space-x-2">
                   <div className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0" />
-                  <span>Powered by Brave Search API</span>
+                  <span>Powered by XTerm API</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <div className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0" />
-                  <span>Privacy-first, independent search results</span>
+                  <span>Fast and intelligent search results</span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <div className="w-1 h-1 bg-accent rounded-full mt-2 flex-shrink-0" />
-                  <span>AI summaries provided by Brave Summarizer</span>
+                  <span>AI summaries provided by Bard</span>
                 </li>
               </ul>
             </div>
