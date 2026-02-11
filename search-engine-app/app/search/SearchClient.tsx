@@ -146,7 +146,7 @@ export default function SearchClient({ initialQuery, initialResults, initialType
       {/* Footer */}
       <footer className="border-t border-border bg-muted/30 py-8 px-4">
         <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>© 2024 AI Search Engine. Powered by Brave.</p>
+          <p>© 2024 AI Search Engine. Made With <a href="https://adityaputra-portofolio.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Aditya Arta Putra X TJKT A SMKM BANDONGAN</a></p>
           <div className="flex space-x-6">
             <Link href="#" className="hover:text-foreground">Privacy Policy</Link>
             <Link href="#" className="hover:text-foreground">Terms of Service</Link>
