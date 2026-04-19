@@ -1,0 +1,14 @@
+
+> search-engine-app@0.1.0 dev
+> next dev --turbo
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 1168ms
+○ Compiling / ...
+ GET / 200 in 5.4s (compile: 5.0s, render: 373ms)
+ GET / 200 in 138ms (compile: 10ms, render: 128ms)
+ GET / 200 in 88ms (compile: 5ms, render: 83ms)
